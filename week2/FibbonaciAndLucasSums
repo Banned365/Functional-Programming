@@ -1,0 +1,34 @@
+#lang racket
+
+(define (fib n)
+  (define (fib-iter a b current)
+    (if (= n current) b
+        (fib-iter b (+ a b) (add1 current)))
+     )
+    (fib-iter 1 1 2))
+
+(define (lucas n)
+  (define (lucas-iter a b current)
+    (cond [(= n current) b]
+          [(= n 1) 2]
+       [else (lucas-iter b (+ a b) (add1 current))])
+     )
+    (lucas-iter 2 1 2))
+
+(define (nth-fibonacci-sum n)
+  (define (nth-fibonacci-sum-iter current n result)
+    (cond
+      [(< n current) result]
+      [(= n 1) 1]
+      [  else (nth-fibonacci-sum-iter (add1 current) n (+ result (fib current)))])
+    )
+  (nth-fibonacci-sum-iter 2 n (fib 2)))
+
+(define (nth-lucas-sum n)
+  (define (nth-lucas-sum-iter current n result)
+    (cond
+      [(< n current) result]
+      [(= n 1) 2]
+      [  else (nth-lucas-sum-iter (add1 current) n (+ result (lucas current)))])
+    )
+  (nth-lucas-sum-iter 2 n (+ (lucas 2) (lucas 1))))
